@@ -1,0 +1,54 @@
+# -------------------------------
+# Operation Blackhole – SAFE GITIGNORE
+# -------------------------------
+
+# ❌ NEVER upload encrypted files
+.blackhole_store/
+*.black
+
+# ❌ NEVER upload master key (fallback mode)
+master_key.b64
+master_key.txt
+**/master_key.b64
+**/master_key.txt
+
+# ❌ Never upload systemd logs or debug output
+*.log
+*.bak
+*.tmp
+
+# ❌ Python virtual environment
+venv/
+env/
+ENV/
+
+# ❌ Python cache folders
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ❌ Editor & IDE junk
+.vscode/
+.idea/
+*.iml
+
+# ❌ OS junk files
+.DS_Store
+Thumbs.db
+
+# ❌ Temporary RAM-disk temp files (just in case)
+bh_*
+*.ram
+
+# ❌ Local test files you drag into Watched folder
+Watched/*
+
+# Ignore compiled binaries or builds (if you later add C extensions)
+build/
+dist/
+*.egg-info/
+
+# Ignore local environment variables or config
+.env
+*.env
