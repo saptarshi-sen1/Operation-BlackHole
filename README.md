@@ -1,116 +1,129 @@
-# 🌑 Operation Blackhole
+# 🌑 Operation Blackhole  
+### Zero-Storage Security System — Files Never Persist in Plain Form
 
-### Zero-Storage Security System — Files Never Exist in Original Form
+**Operation Blackhole** is a next-generation **Zero-Data-Persistence Security System** designed so that **no file on your device ever exists in its original, readable form**.
 
-Operation Blackhole is a next-generation **Zero-Data Storage System** designed to ensure that **no file stored on your device ever exists in its original, readable form**.
+Once a file enters the system, it is immediately:
 
-The moment a file enters the watched folder (e.g., photos, videos, documents, PDFs, text files), it is:
+1. **Detected** by the watcher  
+2. **Encrypted**, converted into `.black` mathematical format  
+3. **Stored securely** inside the encrypted vault  
+4. **Original file is securely wiped beyond recovery**  
+5. **Reconstructed only in RAM** when viewed or restored  
 
-1. **Detected automatically**
-2. **Encrypted + transformed into mathematical parameters (`.black` format)**
-3. **Stored securely**
-4. **The original file is permanently and securely wiped**
-5. **Reconstructed only in RAM** when the user chooses to view it
-
-This ensures that **nothing sensitive ever touches permanent storage**.
-
----
-
-## 🚀 Features
-
-### 🔐 Zero-Storage Model
-
-Files never exist on disk in decrypted form. Reconstruction happens **ONLY in RAM**.
-
-### 🔁 Automatic Processing
-
-A watcher daemon continuously monitors the `~/Watched` directory.
-
-### 🌑 `.black` Format
-
-Encrypted JSON-based mathematical representation containing:
-
-* Wrapped FEK
-* AES-GCM encrypted payload
-* MIME type
-* Original filename
-* No traceable metadata
-
-### 🔥 Secure Wipe
-
-Original files overwritten + deleted to prevent recovery.
-
-### 🔒 Pluggable Master-Key Storage
-
-Supports:
-
-* System keyring (Secret Service / GNOME Keyring)
-* Secure fallback (`master_key.b64` with `chmod 600`)
-
-### 👁 RAM-Based Viewer
-
-Reconstructs files in memory only. No permanent files or thumbnails left behind.
+This guarantees that even with full device access, **no forensic tool or attacker can recover your files.** 🌘
 
 ---
 
-## 📁 Folder Structure
+# 🚀 Features (Updated)
+
+### 🔐 Zero-Storage Model  
+Files never exist unencrypted on disk.  
+Decrypted data lives only in **RAM**, never written back.
+
+### 🔁 Real-Time Watcher  
+A background watchdog converts anything added into the `~/Watched` folder into encrypted `.black` files.
+
+### 🌑 The `.black` Format  
+An encrypted, metadata-clean structure containing:
+
+- AES-GCM encrypted payload  
+- Encrypted FEK (File Encryption Key)  
+- Random IV / Nonce  
+- MIME type  
+- Original filename  
+- **Zero metadata leakage**
+
+### 🔥 Secure Wipe  
+Overwrites original files before deletion to prevent recovery.
+
+### 🔒 Passphrase-Protected Master Key  
+
+- Master key wrapping using PBKDF2 + AES  
+- Passphrase set / change / reset  
+- Metadata-backed wrapped key file  
+- Recoverable via exported JSON backup  
+- Session-based unlocking  
+
+### 🖥 Modern GUI Application  
+
+Tkinter-based GUI with:
+
+- Image preview (RAM-only)  
+- Text preview  
+- Restore to chosen path  
+- Secure deletion of `.black` files  
+- Passphrase setup / change / export / import  
+- WSL-friendly folder opening (Windows Explorer)  
+- Internal folder browser fallback  
+
+---
+
+# 📁 Folder Structure
 
 ```
+
 operation_blackhole/
-├── daemon_watcher.py       # Watches folder & converts files to .black
-├── blackhole_core.py       # Encryption, encoding, file wiping logic
-├── key_manager.py          # Master key generation & secure storage
-├── viewer.py               # Secure file viewer (RAM-only reconstruction)
-├── secure_wipe.py          # Utility to securely delete files
-├── venv/                   # Virtual environment (ignored in git)
-├── Watched/                # Input folder (auto-created)
-└── .blackhole_store/       # Encrypted .black files + fallback master key
-```
+├── daemon_watcher.py          # Watches ~/Watched and encrypts files
+├── blackhole_core.py          # Encryption, decryption, secure wipe
+├── password_manager.py       # Master passphrase system
+├── encrypt_decrypt_gui.py    # GUI application
+├── restore_file.py           # CLI restore tool
+├── venv/                     # Virtual environment (ignored)
+├── Watched/                  # Auto-encrypt drop folder
+└── .blackhole_store/         # Encrypted vault
+
+````
 
 ---
 
-## 🛠 Installation
+# 🛠 Installation
 
-### 1) Clone the repository
+## 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/<your-username>/operation_blackhole.git
 cd operation_blackhole
-```
+````
 
-### 2) Create a Python virtual environment
+## 2️⃣ Create Virtual Environment
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3) Install dependencies
+## 3️⃣ Install Dependencies
 
 ```bash
-pip install watchdog cryptography pillow keyring
+pip install watchdog cryptography pillow
 ```
 
-### 4) Create directories
+**Tkinter (Linux / WSL):**
+
+```bash
+sudo apt install -y python3-tk
+```
+
+## 4️⃣ Create Required Folders
 
 ```bash
 mkdir -p ~/Watched
 mkdir -p ~/.blackhole_store
-chmod 700 ~/Watched
-chmod 700 ~/.blackhole_store
+chmod 700 ~/Watched ~/.blackhole_store
 ```
 
 ---
 
-## 🔧 Systemd Service (Auto-Start Watcher)
+# 🔧 Autostart Watcher (systemd – User Service)
 
-Create the service folder:
+## Create systemd directory
 
 ```bash
 mkdir -p ~/.config/systemd/user
 ```
 
-Create the service file:
+## Create service file
 
 ```bash
 cat > ~/.config/systemd/user/operation_blackhole.service <<'SERVICE'
@@ -129,14 +142,14 @@ WantedBy=default.target
 SERVICE
 ```
 
-Enable and start:
+## Enable & Start
 
 ```bash
 systemctl --user daemon-reload
 systemctl --user enable --now operation_blackhole.service
 ```
 
-View logs:
+## View Logs
 
 ```bash
 journalctl --user -u operation_blackhole.service -f
@@ -144,115 +157,130 @@ journalctl --user -u operation_blackhole.service -f
 
 ---
 
-## 📥 How to Use
+# 🖥 Using the GUI
 
-### 1️⃣ Drop files into:
+Launch the GUI:
+
+```bash
+source venv/bin/activate
+python encrypt_decrypt_gui.py
+```
+
+### GUI Capabilities
+
+* Encrypt via `~/Watched`
+* Image and text previews (RAM-only)
+* Restore decrypted files
+* Secure deletion of `.black` entries
+* Passphrase management
+* Wrapped key metadata viewer
+* Export / import wrapped-key backup
+* Folder opening via:
+
+  * Windows Explorer (WSL)
+  * Linux file manager
+  * Internal browser fallback
+
+---
+
+# 📥 Encryption Flow
+
+### 1️⃣ Add Files
+
+Drop files into:
 
 ```bash
 ~/Watched/
 ```
 
-The system will:
+They are automatically:
 
-* Detect the file
-* Wait until fully written
-* Convert to `.black` (encrypted parameters)
-* Securely wipe the original
-* Store encrypted data in `~/.blackhole_store/`
+* Detected
+* Encrypted into `.black`
+* Stored in `~/.blackhole_store/`
+* Securely wiped from `~/Watched`
 
-### 2️⃣ View encrypted files:
+### 2️⃣ View
 
-```bash
-cd ~/operation_blackhole
-source venv/bin/activate
-python viewer.py
-```
+* GUI reconstructs files **only in RAM**
+* No decrypted files touch disk
 
-Viewer behavior:
+### 3️⃣ Restore
 
-* **Images** → displayed in RAM-only Tkinter window
-* **Text** → preview printed in the terminal
-* **PDFs / Videos / Others** → written to `/dev/shm` (RAM), opened with `xdg-open`, wiped after confirmation
-
-Nothing remains on disk after viewing (best effort).
+* Choose output path
+* File reconstructed on demand
 
 ---
 
-## 🧪 Testing Your Setup
+# 🧪 Testing
 
-### Test Text File
-
-```bash
-echo "test123" > ~/Watched/test.txt
-```
-
-### Test Image
+### Text File
 
 ```bash
-cp ~/Pictures/some_image.jpg ~/Watched/
+echo "hello_world" > ~/Watched/test.txt
 ```
 
-### Confirm Processing
+### Image File
 
-List encrypted files:
+```bash
+cp /usr/share/backgrounds/*.jpg ~/Watched/
+```
+
+### Verify
 
 ```bash
 ls ~/.blackhole_store
-```
-
-Ensure original is deleted:
-
-```bash
 ls ~/Watched
 ```
 
-View encrypted files:
-
-```bash
-python viewer.py
-```
-
-Inspect `.black` file (should reveal nothing readable):
-
-```bash
-strings ~/.blackhole_store/*.black | head
-```
-
 ---
 
-## 🔐 Security Model
+# 🔐 Security Model
 
 ### Master Key
 
-* Wraps per-file FEKs
-* Stored in system keyring or fallback local file
-* Losing it = **permanent loss of all .black files**
+* Wrapped using PBKDF2 (passphrase-derived)
+* Stored only as encrypted metadata
+* Never stored in plaintext
+* **Losing passphrase or backup = irreversible data loss**
 
-### Per-file Encryption
+### Per File
 
-* AES-GCM with random FEK & IV
+* AES-GCM encryption
+* Unique FEK per file
 * FEK encrypted with master key
-* No metadata or thumbnails stored
+* Strong integrity & authenticity
+
+### RAM-Only Reconstruction
+
+* Decryption occurs in memory only
+* `/dev/shm` used for safe previews
+* Memory cleared after use
 
 ### Secure Wipe
 
-* Overwrites original files before deletion
-
-### RAM-only Reconstruction
-
-* Rebuilt files exist only in volatile memory (`/dev/shm` for non-image types)
+* Multi-pass overwrite
+* Resistant to forensic recovery
 
 ---
 
-## ⚠️ Important Notes
+# ⚠️ Important Notes
 
-* Losing the master key → all files permanently unrecoverable
-* **Never commit** `.black` files or master keys to GitHub
-* `.gitignore` prevents accidental uploads — review it before first commit
+**NEVER commit:**
+
+```text
+.blackhole_store/
+master_key.b64
+wrapped_key.json
+```
+
+* Losing passphrase or wrapped key = total data loss
+* GUI supports backup export — store it safely
+* WSL relies on Windows Explorer for folder opening
 
 ---
 
-## 🧾 Recommended `.gitignore`
+# 🧾 .gitignore
 
 ```
 .blackhole_store/
@@ -263,15 +291,32 @@ __pycache__/
 *.log
 *.tmp
 master_key.b64
+wrapped_key.json
 ```
 
 ---
 
-## 📡 Future Roadmap
+# 📡 Future Roadmap
 
-* GUI dashboard
-* TPM-backed master key sealing
-* Better embedded viewers (PDF, video)
-* FUSE filesystem integration (“blackFS”)
-* Secure multi-device sync
-* Mobile (Android) implementation
+* TPM / Secure Enclave key sealing
+* Android Blackhole Camera app
+* Encrypted clipboard
+* FUSE-based encrypted filesystem (BlackFS)
+* Cross-device encrypted sync
+* Native Windows / macOS GUI builds
+* Built-in encrypted PDF & video viewers
+
+---
+
+# 🎉 Summary
+
+**Operation Blackhole** is a complete zero-storage, zero-trace encryption system featuring:
+
+* Automatic encryption
+* RAM-only access
+* Passphrase-protected master key
+* Secure wiping
+* GUI management
+* WSL-optimized workflows
+
+A **full cryptographic vault** built for maximum privacy and zero trust.
