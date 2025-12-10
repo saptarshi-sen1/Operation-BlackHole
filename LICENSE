@@ -1,0 +1,102 @@
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
+
+Copyright (C) 2025  Operation Blackhole Team
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+
+Preamble
+
+The GNU Affero General Public License is a free, copyleft license for
+software and other kinds of works, specifically designed to ensure
+cooperation with the community in the case of network server software.
+
+The licenses for most software are designed to take away your freedom
+to share and change it. By contrast, our General Public Licenses are
+intended to guarantee your freedom to share and change the program.
+
+When you modify the Program, your modification must also be licensed
+under the AGPL. This ensures that the public receives the benefits of
+your improvements.
+
+The precise terms and conditions for copying, distribution, and
+modification follow.
+
+TERMS AND CONDITIONS
+
+0. Definitions.
+“Program” refers to any copyrightable work licensed under this License.
+
+“You” means the licensee or user of the Program.
+
+“Modify” means to copy or adapt all or part of the Program.
+
+“Source Code” means the preferred form for making modifications.
+
+“Object Code” means any non-source form of a work.
+
+1. Source Code.
+You must provide the complete corresponding source code in any
+distribution.
+
+2. Basic Permissions.
+You may run the Program for any purpose, without conditions.
+
+3. Protecting Users' Legal Rights.
+You must license the whole work under this License.
+
+4. Conveying Verbatim Copies.
+You may copy and distribute verbatim copies of this License as you receive it.
+
+5. Conveying Modified Source Versions.
+You must:
+  a) License the modified work under this License.
+  b) State the changes you made.
+  c) Carry prominent notices.
+
+6. Conveying Non-Source Forms.
+You must accompany the object code with the corresponding source code.
+
+7. Additional Terms.
+You may add additional permissions to your work.
+
+8. Termination.
+Any attempt to violate the terms automatically terminates your rights
+under this License.
+
+9. Acceptance Not Required.
+You are not required to accept this License, since you have not signed it.
+
+10. Automatic Licensing of Downstream Users.
+Each time you convey the Program, the recipient automatically receives
+a license to run and modify it.
+
+11. Patents.
+If you distribute the Program, you grant a patent license to recipients.
+
+12. No Surrender of Others' Freedom.
+You may not impose further restrictions.
+
+13. Remote Network Interaction.
+If the Program is modified and used to serve users over a network, the
+complete corresponding source code must be offered to those users.
+
+14. Disclaimer of Warranty.
+The Program is provided “as is” without warranty of any kind.
+
+15. Limitation of Liability.
+In no event will the authors be liable for damages.
+
+END OF TERMS AND CONDITIONS
+
+---
+
+Additional Terms for Operation Blackhole
+
+This project includes cryptographic components designed to protect
+user privacy. Any use of this software must:
+1. Give credit to the original authors.
+2. Not misrepresent the origin of the software.
+3. Disclose any modifications made.
+4. Follow the AGPL obligations when used in any cloud, SaaS, or hosted system.
