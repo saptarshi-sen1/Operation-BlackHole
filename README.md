@@ -165,7 +165,7 @@ The system will:
 ```bash
 cd ~/operation_blackhole
 source venv/bin/activate
-python viewer.py
+python encrypt_decrypt_gui.py
 ```
 
 Viewer behavior:
